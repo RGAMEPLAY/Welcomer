@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js"
   },
-   "engines": {
+  "engines": {
     "node": "16.x"
   },
   "author": "ZeroDisocrd",
@@ -16,10 +16,11 @@
     "canvas": "^2.8.0",
     "canvas-constructor": "^5.0.1",
     "discord.js": "^13.3.1",
+    "express": "^4.17.2",
     "keyv": "^4.0.4",
     "weird-to-normal-chars": "^1.8.0"
   },
-"devDependencies": {
+  "devDependencies": {
     "node": "^16.9.1"
   }
 }

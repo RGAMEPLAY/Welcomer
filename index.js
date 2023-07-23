@@ -1,3 +1,15 @@
+const express = require('express');
+
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello Express app!')
+});
+
+app.listen(3000, () => {
+  console.log('server started');
+});
+
 const { MessageAttachment, MessageEmbed, Client } = require('discord.js');
 const { resolveImage, Canvas} = require("canvas-constructor/cairo")
 const Keyv = require('keyv');
@@ -102,13 +114,13 @@ client.on('guildMemberAdd', async member => {
    const attachment = new MessageAttachment(buffer_attach, 'welcome.png')
    let embed = new MessageEmbed()
     .setTitle(`Welcome to ${member.guild.name}`)
-    .setDescription(`Welcome To Our Server ${member.user} we are happy to have you! you are member number ${member.guild.memberCount}!`)
-    .setColor('#2F3136')
+    .setDescription(`Hi, Survivor ${member.user} Welcome to EXODUS AFTERMATH!`)
+    .setColor('#FFEA00')
     .setThumbnail(member.displayAvatarURL({
       dynamic: true
     }))
     .setTimestamp()
-    .setFooter('Thanks For Joining!')
+    .setFooter('')
     .setImage("attachment://welcome.png")
 
     channel?.send({ embeds: [embed], files: [attachment] })
@@ -120,24 +132,30 @@ async function generareCanvas(member) {
   const background = await resolveImage(await db.get(`bg_${member.guild.id}`)) ?? await resolveImage("https://cdn.discordapp.com/attachments/910400703862833192/910426253947994112/121177.png")
   const { weirdToNormalChars } = require('weird-to-normal-chars')
   const name = weirdToNormalChars(member.user.username)
-  let canvas = new Canvas(1024, 450)
-  .printImage(background, 0, 0, 1024, 450)
-  .setColor("#2F3136")
-  .printCircle(512, 155, 120)
-  .printCircularImage(avatar, 512, 155, 115)
-  .setTextAlign('center')
-  .setTextFont('70px Discord')
-  .printText(`Welcome`, 512, 355)
-  .setTextAlign("center")
-  .setColor("#FFFFFF")
-  .setTextFont('45px Discordx')
-  .printText(`${name}`, 512, 395)
-  .setTextAlign("center")
-  .setColor("#FFFFFF")
-  .setTextFont('30px Discord')
-  .printText(`To ${member.guild.name}`, 512, 430)
+    let canvas = new Canvas(1024, 450)
+    .printImage(background, 0, 0, 1024, 450)
+    .setColor("#2F3136")
+    .printCircle(512, 155, 120)
+    .printCircularImage(avatar, 512, 155, 115)
+    .setTextAlign('center')
+    .setTextFont('70px Discord')
+    .printText(`Welcome`, 512, 355)
+    .setTextAlign("center")
+    .setColor("#000000") // Set the shadow color to black
+    .setTextFont('45px Discordx')
+    .printText(`${name}`, 512 + 2, 395 + 2) // Add an offset to x and y positions for shadow effect
+    .setTextAlign("center")
+    .setColor("#FFFFFF")
+    .setTextFont('45px Discordx')
+    .printText(`${name}`, 512, 395) // Print the main text with white color
+    .setTextAlign("center")
+    .setColor("#E81C1C")
+    .setTextFont('30px Discord')
+    .printText(`To ${member.guild.name}`, 512, 430);
   return canvas.toBufferAsync()
 }
 
 
-client.login(token)
+
+
+client.login(process.env.token)
